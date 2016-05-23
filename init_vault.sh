@@ -9,7 +9,6 @@ function vault {
 	docker exec -it vault vault "$@" 
 }
 
-
 docker-compose down
 docker-compose up -d
 
@@ -24,6 +23,9 @@ echo
 KEY1=`echo "$INIT" | grep 'Key 1' | cut -d' ' -f3`
 KEY2=`echo "$INIT" | grep 'Key 2' | cut -d' ' -f3`
 KEY3=`echo "$INIT" | grep 'Key 3' | cut -d' ' -f3`
+
+INITIAL_ROOT_TOKEN=`echo "$INIT" | grep "Initial Root Token:" | cut -d' ' -f4`
+echo "IRC = ${INITIAL_ROOT_TOKEN}"
 
 #
 # 2. Unseal the vault
@@ -40,3 +42,6 @@ echo
 echo "Unsealing with key 3..."
 vault unseal $ADDR_PARAM $KEY3
 echo
+
+
+
