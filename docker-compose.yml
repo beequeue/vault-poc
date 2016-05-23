@@ -1,0 +1,17 @@
+vault:
+  image: voxxit/vault:latest
+  container_name: vault
+  volumes:
+    - ./vault.hcl:/etc/vault.hcl
+  ports:
+    - 8200:8200
+  command: "server -config=/etc/vault.hcl"
+
+php-client:
+  image: php:5.6-apache
+  volumes:
+    - ./php-client:/var/www/html
+  ports:
+    - 8080:80
+  links:
+    - vault:vault
